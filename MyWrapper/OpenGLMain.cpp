@@ -4,6 +4,12 @@
 
 list<SqlQueryPlanNode> *nodeList;
 
+void display_node(int x, int y, char *display_name) {
+	glRectd(x, y, x + 1, y + 1);
+	glRasterPos2d(x, y-0.5);
+	glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)display_name);
+}
+
 
 void display()
 {
@@ -13,10 +19,7 @@ void display()
 	// set the color
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	// draw the point
-	glBegin(GL_POINTS);
-	glVertex2f(10, 10);
-	glEnd();
+	display_node(10, 10, "Hi");
 
 	// flush the frame buffer
 	glFlush();
