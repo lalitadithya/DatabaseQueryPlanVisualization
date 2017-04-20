@@ -92,6 +92,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>C:\Users\Lalit Adithya\Documents\Visual Studio 2017\Projects\DatabaseVisualization\DatabaseVisualization\Dependecies\freeglut;C:\Users\Lalit Adithya\Documents\Visual Studio 2017\Projects\DatabaseVisualization\DatabaseVisualization\Dependecies\glew;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
