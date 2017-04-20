@@ -11,3 +11,7 @@ SqlQueryPlanNode::SqlQueryPlanNode(char * nodeName)
 SqlQueryPlanNode::~SqlQueryPlanNode()
 {
 }
+
+char *SqlQueryPlanNode::GetNodeName() {
+	return this->nodeName;
+}

@@ -1,7 +1,7 @@
 #pragma once
 #include "SqlQueryPlanNode.h"
-#include <list>
+#include <vector>
 
 using namespace std;
 
-void displayQueryPlan(list<SqlQueryPlanNode> &nodes);
+void displayQueryPlan(vector<SqlQueryPlanNode> &nodes);

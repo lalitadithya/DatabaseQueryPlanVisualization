@@ -2,7 +2,7 @@
 #include "Dependecies\freeglut\freeglut.h"
 #include "OpenGLMain.h"
 
-list<SqlQueryPlanNode> *nodeList;
+vector<SqlQueryPlanNode> *nodeList;
 
 void display_node(int x, int y, char *display_name) {
 	glRectd(x, y, x + 1, y + 1);
@@ -16,7 +16,12 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	display_node(10, 10, "Hi");
+	int x = 2, y = 15;
+
+	for (int i = 0; i < nodeList->size(); i++) {
+		display_node(x, y, nodeList->at(i).GetNodeName());
+		x += 2;
+	}
 
 	glFlush();
 }
@@ -29,7 +34,7 @@ void init()
 }
 
 
-void displayQueryPlan(list<SqlQueryPlanNode> &nodes)
+void displayQueryPlan(vector<SqlQueryPlanNode> &nodes)
 {
 	int argc = 0;
 	char *argv[] = { 0 };
