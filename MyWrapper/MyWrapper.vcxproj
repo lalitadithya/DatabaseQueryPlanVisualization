@@ -141,7 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="OpenGLMain.cpp" />
+    <ClCompile Include="SqlQueryPlanNode.cpp" />
     <ClCompile Include="Wrapper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OpenGLMain.h" />
+    <ClInclude Include="SqlQueryPlanNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
