@@ -23,7 +23,10 @@ namespace Launcher
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Node root = new Node();
+            Node root = new Node()
+            {
+                Name = "Select"
+            };
             XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
             XDocument doc = XDocument.Parse(SqlQueryPlan.GetXmlPlanForQuery("select * from Marks inner join Student on Marks.StudentId = Student.Id"));
             SqlQueryPlan.ExtractDataFromXml(doc.Descendants(ns + "QueryPlan").First().ToString(), ref root);

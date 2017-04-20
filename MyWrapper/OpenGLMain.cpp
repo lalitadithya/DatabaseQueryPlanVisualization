@@ -2,12 +2,25 @@
 #include "Dependecies\freeglut\freeglut.h"
 #include "OpenGLMain.h"
 
-vector<SqlQueryPlanNode> *nodeList;
+SqlQueryPlanNode *nodeList;
+int treesize1 = 0;
 
 void display_node(int x, int y, char *display_name) {
 	glRectd(x, y, x + 5, y + 5);
 	glRasterPos2d(x, y - 4);
 	glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)display_name);
+}
+
+
+void display_plan(SqlQueryPlanNode *root, int x, int y)
+{
+	display_node(x, y, root->GetNodeName());
+	x += 20;
+	for (int i = 0; i < root->GetChildren()->size(); i++)
+	{
+		display_plan(&root->GetChildren()->at(i), x, y);
+		y -= 10;
+	}
 }
 
 
@@ -18,14 +31,10 @@ void display()
 
 	int x = 2, y = 50;
 
-	for (int i = 0; i < nodeList->size(); i++) {
-		display_node(x, y, nodeList->at(i).GetNodeName());
-		x += 25;
-	}
+	display_plan(nodeList, x, y);
 
 	glFlush();
 }
-
 
 void init()
 {
@@ -34,11 +43,12 @@ void init()
 }
 
 
-void displayQueryPlan(vector<SqlQueryPlanNode> &nodes)
+void displayQueryPlan(SqlQueryPlanNode *root, int size)
 {
 	int argc = 0;
 	char *argv[] = { 0 };
-	nodeList = &nodes;
+	nodeList = root;
+	treesize1 = size;
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);

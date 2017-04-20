@@ -50,7 +50,6 @@ namespace Launcher
             return result;
         }
 
-
         public static void ExtractDataFromXml(string xml, ref Node root, int level = 0)
         {
             XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
@@ -80,18 +79,16 @@ namespace Launcher
             }
         }
 
-        public static void SerilizeTree(ref Node root, ref string text, int level = 0)
-        {
-            for(int i = 0; i < level; i++)
-            {
-                text += " ";
-            }
+        public static int id = 0;
 
-            text += root.Name + "\n";
-            foreach(var child in root.GetChildren())
+        public static void SerilizeTree(ref Node root, ref string text, int level = 0, int parnet_id = 0)
+        {
+            int currentNodeId = id++;
+            text += currentNodeId + " " + parnet_id + " " + root.Name.Replace(" ", "_") + "\n";
+            foreach (var child in root.GetChildren())
             {
                 Node temp = child;
-                SerilizeTree(ref temp, ref text, level + 2);
+                SerilizeTree(ref temp, ref text, level + 2, currentNodeId);
             }
         }
     }

@@ -4,4 +4,4 @@
 
 using namespace std;
 
-void displayQueryPlan(vector<SqlQueryPlanNode> &nodes);
+void displayQueryPlan(SqlQueryPlanNode *root, int size);
