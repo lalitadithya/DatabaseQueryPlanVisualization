@@ -4,9 +4,7 @@
 
 list<SqlQueryPlanNode> *nodeList;
 
-/*
-* GLUT function to draw the ouput
-*/
+
 void display()
 {
 	// clear the buffer
@@ -24,9 +22,7 @@ void display()
 	glFlush();
 }
 
-/*
-* Helper method to initialize the required variables and GLUT
-*/
+
 void init()
 {
 	// set the backgroud color
@@ -36,9 +32,7 @@ void init()
 	gluOrtho2D(0.0, 20.0, 0.0, 20.0);
 }
 
-/*
-* Main function
-*/
+
 void displayQueryPlan(list<SqlQueryPlanNode> &nodes)
 {
 	int argc = 0;
