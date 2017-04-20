@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Xml;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace Launcher
 {
@@ -21,23 +23,19 @@ namespace Launcher
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<string> node = new List<string>();
-            List<int> nodeLength = new List<int>();
+            Node root = new Node();
+            XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
+            XDocument doc = XDocument.Parse(SqlQueryPlan.GetXmlPlanForQuery("select * from Marks inner join Student on Marks.StudentId = Student.Id"));
+            SqlQueryPlan.ExtractDataFromXml(doc.Descendants(ns + "QueryPlan").First().ToString(), ref root);
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(SqlQueryPlan.GetXmlPlanForQuery("select * from Student order by Semester"));
+            string toWrite = "";
+            SqlQueryPlan.SerilizeTree(ref root, ref toWrite);
 
-            XmlNodeList nodes = doc.GetElementsByTagName("RelOp");
+            System.IO.File.WriteAllText("query.txt", toWrite);
 
-            for(int i = 0; i <nodes.Count; i++)
+            new Thread(() =>
             {
-                node.Add(nodes[i].Attributes["PhysicalOp"].Value);
-                nodeLength.Add(nodes[i].Attributes["PhysicalOp"].Value.Length);
-            }
-
-            new Thread(() => {
-                int temp = nodeLength.ToArray().Length;
-                OpenGl.DisplayVisualization(node.ToArray(), temp);
+                OpenGl.DisplayVisualization();
             }).Start();
         }
     }
@@ -46,6 +44,6 @@ namespace Launcher
     {
         [DllImport("MyWrapper.dll", CallingConvention = CallingConvention.Cdecl)]
 
-        public static extern void DisplayVisualization(string[] queryPlan, int numberOfElements);
+        public static extern void DisplayVisualization();
     }
 }

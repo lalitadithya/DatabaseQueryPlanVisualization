@@ -4,11 +4,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Launcher
 {
     class SqlQueryPlan
     {
+
         public static string GetXmlPlanForQuery(string queryText)
         {
             string result = null;
@@ -45,6 +48,51 @@ namespace Launcher
                 }
             }
             return result;
+        }
+
+
+        public static void ExtractDataFromXml(string xml, ref Node root, int level = 0)
+        {
+            XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
+            XDocument doc = XDocument.Parse(xml);
+
+            bool foundNodeInImmediateChildern = false;
+
+            foreach (var element in doc.Root.Elements(ns + "RelOp"))
+            {
+                foundNodeInImmediateChildern = true;
+                Node myNode = new Node
+                {
+                    Id = 0,
+                    Name = element.Attribute("PhysicalOp").Value
+                };
+                root.AddChild(myNode);
+
+                ExtractDataFromXml(element.ToString(), ref myNode, level + 1);
+            }
+
+            if (!foundNodeInImmediateChildern)
+            {
+                foreach (var element in doc.Root.Elements())
+                {
+                    ExtractDataFromXml(element.ToString(), ref root, level);
+                }
+            }
+        }
+
+        public static void SerilizeTree(ref Node root, ref string text, int level = 0)
+        {
+            for(int i = 0; i < level; i++)
+            {
+                text += " ";
+            }
+
+            text += root.Name + "\n";
+            foreach(var child in root.GetChildren())
+            {
+                Node temp = child;
+                SerilizeTree(ref temp, ref text, level + 2);
+            }
         }
     }
 }

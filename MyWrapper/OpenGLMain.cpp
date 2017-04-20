@@ -5,8 +5,8 @@
 vector<SqlQueryPlanNode> *nodeList;
 
 void display_node(int x, int y, char *display_name) {
-	glRectd(x, y, x + 1, y + 1);
-	glRasterPos2d(x, y-0.5);
+	glRectd(x, y, x + 5, y + 5);
+	glRasterPos2d(x, y - 4);
 	glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)display_name);
 }
 
@@ -16,11 +16,11 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	int x = 2, y = 15;
+	int x = 2, y = 50;
 
 	for (int i = 0; i < nodeList->size(); i++) {
 		display_node(x, y, nodeList->at(i).GetNodeName());
-		x += 2;
+		x += 25;
 	}
 
 	glFlush();
@@ -30,7 +30,7 @@ void display()
 void init()
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	gluOrtho2D(0.0, 20.0, 0.0, 20.0);
+	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
 }
 
 
