@@ -50,6 +50,8 @@ extern "C"
 		// initialize the callbacks
 		glutDisplayFunc(display);
 
+		glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+
 		// initialize the variables
 		init();
 

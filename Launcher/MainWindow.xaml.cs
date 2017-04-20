@@ -1,5 +1,5 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 
 namespace Launcher
@@ -16,11 +16,11 @@ namespace Launcher
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Example.DisplayHelloFromDLL();
+            new Thread(() => { OpenGl.DisplayHelloFromDLL(); }).Start();
         }
     }
 
-    class Example
+    class OpenGl
     {
         [DllImport("MyWrapper.dll")]
 
