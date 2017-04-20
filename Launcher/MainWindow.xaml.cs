@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace Launcher
 {
@@ -11,5 +13,17 @@ namespace Launcher
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Example.DisplayHelloFromDLL();
+        }
+    }
+
+    class Example
+    {
+        [DllImport("MyWrapper.dll")]
+
+        public static extern void DisplayHelloFromDLL();
     }
 }
