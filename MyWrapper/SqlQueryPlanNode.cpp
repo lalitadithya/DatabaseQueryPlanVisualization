@@ -8,6 +8,7 @@ SqlQueryPlanNode::SqlQueryPlanNode(char * nodeName, int id)
 	strcpy(this->nodeName, nodeName);
 	this->children = new vector<SqlQueryPlanNode>();
 	this->id = id;
+	display_x = display_y = 0;
 }
 
 SqlQueryPlanNode::~SqlQueryPlanNode()

@@ -5,7 +5,8 @@
 SqlQueryPlanNode *nodeList;
 int treesize1 = 0;
 
-void display_node(int x, int y, char *display_name) {
+void display_node(int x, int y, char *display_name) 
+{
 	glRectd(x, y, x + 5, y + 5);
 	glRasterPos2d(x, y - 4);
 	glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)display_name);
@@ -38,7 +39,7 @@ void display()
 
 void init()
 {
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(1.0, 1.0, 1.0, 0.0);
 	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
 }
 
@@ -54,6 +55,7 @@ void displayQueryPlan(SqlQueryPlanNode *root, int size)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
 	glutInitWindowSize(500, 500);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutCreateWindow("SQL Query Plan");
 
 	glutDisplayFunc(display);

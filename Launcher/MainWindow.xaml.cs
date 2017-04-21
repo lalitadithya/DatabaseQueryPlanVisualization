@@ -7,6 +7,7 @@ using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace Launcher
 {
@@ -23,23 +24,33 @@ namespace Launcher
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Node root = new Node()
+            string query = new TextRange(QueryTextBox.Document.ContentStart, QueryTextBox.Document.ContentEnd).Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(query))
             {
-                Name = "Select"
-            };
-            XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
-            XDocument doc = XDocument.Parse(SqlQueryPlan.GetXmlPlanForQuery("select * from Marks inner join Student on Marks.StudentId = Student.Id"));
-            SqlQueryPlan.ExtractDataFromXml(doc.Descendants(ns + "QueryPlan").First().ToString(), ref root);
-
-            string toWrite = "";
-            SqlQueryPlan.SerilizeTree(ref root, ref toWrite);
-
-            System.IO.File.WriteAllText("query.txt", toWrite);
-
-            new Thread(() =>
+                MessageBox.Show("Query can not be empty");
+            }
+            else
             {
+                ShowStatButton.IsEnabled = false;
+
+                Node root = new Node()
+                {
+                    Name = "Select"
+                };
+                XNamespace ns = "http://schemas.microsoft.com/sqlserver/2004/07/showplan";
+                XDocument doc = XDocument.Parse(SqlQueryPlan.GetXmlPlanForQuery(query));
+                SqlQueryPlan.ExtractDataFromXml(doc.Descendants(ns + "QueryPlan").First().ToString(), ref root);
+
+                string toWrite = "";
+                SqlQueryPlan.SerilizeTree(ref root, ref toWrite);
+
+                System.IO.File.WriteAllText("query.txt", toWrite);
+
                 OpenGl.DisplayVisualization();
-            }).Start();
+
+                ShowStatButton.IsEnabled = true;
+            }
         }
     }
 
